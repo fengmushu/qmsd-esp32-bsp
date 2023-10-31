@@ -361,12 +361,12 @@ static esp_err_t lcd_cam_init(i2s_lcd_driver_t *drv, const i2s_lcd_config_t *con
         REG_CLR_BIT(SYSTEM_PERIP_RST_EN1_REG, SYSTEM_DMA_RST);
     }
 
-    for (int x = SOC_GDMA_PAIRS_PER_GROUP - 1; x >= 0; x--) {
+    for (int x = SOC_GDMA_PAIRS_PER_GROUP_MAX - 1; x >= 0; x--) {
         if (GDMA.channel[x].out.link.start == 0x0) {
             lcd_cam_obj->dma_num = x;
             break;
         }
-        if (x == SOC_GDMA_PAIRS_PER_GROUP - 1) {
+        if (x == SOC_GDMA_PAIRS_PER_GROUP_MAX - 1) {
             ESP_LOGE(TAG, "DMA error");
             lcd_cam_deinit(drv);
             return ESP_FAIL;
